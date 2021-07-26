@@ -1,9 +1,15 @@
 import "./App.css";
-import { Canvas, useFrame, extend, useThree } from "react-three-fiber";
-import { useRef } from "react";
+import {
+  Canvas,
+  useFrame,
+  extend,
+  useThree,
+  useLoader,
+} from "@react-three/fiber";
+import { useRef, Suspense } from "react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Face3, Geometry } from "three/examples/jsm/deprecated/Geometry";
-import * as THREE from 'three';
+import * as THREE from "three";
 // extend orbit controls to use it inside of jsx
 extend({ OrbitControls, Geometry, Face3 });
 
@@ -16,7 +22,8 @@ const Orbit = () => {
 const Box = (props) => {
   // reference the box
   const boxRef = useRef();
-
+  // to add textures
+  const texture = useLoader(THREE.TextureLoader, "/wood.jpeg");
   // used to animate box
   useFrame((state) => {
     // console.log(boxRef);
@@ -26,27 +33,26 @@ const Box = (props) => {
   });
 
   return (
-    <mesh 
-      ref={boxRef} 
-      {...props} 
-      castShadow 
+    <mesh
+      ref={boxRef}
+      {...props}
+      castShadow
       // receiveShadow
     >
       <boxBufferGeometry />
-      <meshPhysicalMaterial 
-        color="white" 
-        // opacity={0.7} 
-        transparent
-        // metalness={1}
-        roughness={0}
-        clearcoat={1}
-        transmission={0.7}
-        reflectivity={1}
-        side={THREE.DoubleSide}
-      />
+      <meshPhysicalMaterial map={texture} />
     </mesh>
   );
 };
+
+const Background = (props) => {
+  const { scene } = useThree()
+  const texture = useLoader(THREE.TextureLoader, 'autoshop.jpeg')
+  texture.mapping = THREE.EquirectangularReflectionMapping
+  scene.background = texture
+  return null
+};
+
 
 const Floor = (props) => {
   return (
@@ -73,12 +79,17 @@ function App() {
       <Canvas
         shadows
         style={{ background: "black" }}
-        camera={{ position: [1, 5, 1] }}
+        camera={{ position: [3, 3, 3] }}
       >
         {/* <fog attach="fog" args={["white", 1, 10]} /> */}
         <ambientLight intensity={0.2} />
         <Bulb position={[0, 3, 0]} />
-        <Box position={[0, 1, 0]} />
+        <Suspense fallback={null}>
+          <Box position={[0, 1, 0]} />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Background />
+        </Suspense>
         <Orbit />
         <axesHelper args={[5]} />
         <Floor position={[0, -0.5, 0]} />
