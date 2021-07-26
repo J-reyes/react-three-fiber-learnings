@@ -20,14 +20,13 @@ const Box = (props) => {
   useFrame((state) => {
     // console.log(boxRef);
     // .current is from the useRef api
-    boxRef.current.rotation.x += 0.01;
     boxRef.current.rotation.y += 0.01;
   });
 
   return (
     <mesh ref={boxRef} {...props} castShadow receiveShadow>
       <boxBufferGeometry />
-      <meshPhysicalMaterial color="blue" />
+      <meshPhysicalMaterial color="blue" fog={false}/>
     </mesh>
   );
 };
@@ -57,11 +56,12 @@ function App() {
       <Canvas
         shadows
         style={{ background: "black" }}
-        camera={{ position: [3, 3, 3] }}
+        camera={{ position: [1, 5, 1] }}
       >
+        <fog attach='fog' args={['white', 1, 10]}/>
         <ambientLight intensity={0.2} />
         <Bulb position={[0, 3, 0]} />
-        <Box position={[-1, 1, 2]} />
+        <Box position={[0, 1, 0]} />
         <Orbit />
         <axesHelper args={[5]} />
         <Floor position={[0, -0.5, 0]} />
