@@ -3,6 +3,7 @@ import { Canvas, useFrame, extend, useThree } from "react-three-fiber";
 import { useRef } from "react";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Face3, Geometry } from "three/examples/jsm/deprecated/Geometry";
+import * as THREE from 'three';
 // extend orbit controls to use it inside of jsx
 extend({ OrbitControls, Geometry, Face3 });
 
@@ -20,14 +21,29 @@ const Box = (props) => {
   useFrame((state) => {
     // console.log(boxRef);
     // .current is from the useRef api
-    boxRef.current.rotation.x += 0.01;
     boxRef.current.rotation.y += 0.01;
+    boxRef.current.rotation.x += 0.01;
   });
 
   return (
-    <mesh ref={boxRef} {...props} castShadow receiveShadow>
+    <mesh 
+      ref={boxRef} 
+      {...props} 
+      castShadow 
+      // receiveShadow
+    >
       <boxBufferGeometry />
-      <meshPhysicalMaterial color="blue" />
+      <meshPhysicalMaterial 
+        color="white" 
+        // opacity={0.7} 
+        transparent
+        // metalness={1}
+        roughness={0}
+        clearcoat={1}
+        transmission={0.7}
+        reflectivity={1}
+        side={THREE.DoubleSide}
+      />
     </mesh>
   );
 };
@@ -57,11 +73,12 @@ function App() {
       <Canvas
         shadows
         style={{ background: "black" }}
-        camera={{ position: [3, 3, 3] }}
+        camera={{ position: [1, 5, 1] }}
       >
+        {/* <fog attach="fog" args={["white", 1, 10]} /> */}
         <ambientLight intensity={0.2} />
         <Bulb position={[0, 3, 0]} />
-        <Box position={[-1, 1, 2]} />
+        <Box position={[0, 1, 0]} />
         <Orbit />
         <axesHelper args={[5]} />
         <Floor position={[0, -0.5, 0]} />
