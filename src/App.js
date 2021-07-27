@@ -1,84 +1,37 @@
 import "./App.css";
-import { Canvas, useFrame, extend, useThree } from "react-three-fiber";
-import { useRef } from "react";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { Face3, Geometry } from "three/examples/jsm/deprecated/Geometry";
-import * as THREE from 'three';
-// extend orbit controls to use it inside of jsx
-extend({ OrbitControls, Geometry, Face3 });
-
-const Orbit = () => {
-  // destruct
-  const { camera, gl } = new useThree();
-  return <orbitControls args={[camera, gl.domElement]} />;
-};
-
-const Box = (props) => {
-  // reference the box
-  const boxRef = useRef();
-
-  // used to animate box
-  useFrame((state) => {
-    // console.log(boxRef);
-    // .current is from the useRef api
-    boxRef.current.rotation.y += 0.01;
-    boxRef.current.rotation.x += 0.01;
-  });
-
-  return (
-    <mesh 
-      ref={boxRef} 
-      {...props} 
-      castShadow 
-      // receiveShadow
-    >
-      <boxBufferGeometry />
-      <meshPhysicalMaterial 
-        color="white" 
-        // opacity={0.7} 
-        transparent
-        // metalness={1}
-        roughness={0}
-        clearcoat={1}
-        transmission={0.7}
-        reflectivity={1}
-        side={THREE.DoubleSide}
-      />
-    </mesh>
-  );
-};
-
-const Floor = (props) => {
-  return (
-    <mesh {...props} receiveShadow>
-      <boxBufferGeometry args={[20, 1, 10]} />
-      <meshPhysicalMaterial />
-    </mesh>
-  );
-};
-
-const Bulb = (props) => {
-  return (
-    <mesh {...props}>
-      <pointLight castShadow />
-      <sphereBufferGeometry args={[0.2, 20, 10]} />
-      <meshPhongMaterial emissive="yellow" />
-    </mesh>
-  );
-};
+import { Canvas } from "@react-three/fiber";
+import { Suspense } from "react";
+import Orbit from "./components/Orbit";
+import Box from "./components/Box";
+import Background from "./components/Background";
+import Floor from "./components/Floor";
+import Bulb from "./components/Bulb";
+import ColorPicker from "./components/ColorPicker";
+import Dragable from "./components/Dragable";
 
 function App() {
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
+      <ColorPicker />
       <Canvas
         shadows
         style={{ background: "black" }}
-        camera={{ position: [1, 5, 1] }}
+        camera={{ position: [7, 7, 7] }}
       >
         {/* <fog attach="fog" args={["white", 1, 10]} /> */}
         <ambientLight intensity={0.2} />
         <Bulb position={[0, 3, 0]} />
-        <Box position={[0, 1, 0]} />
+        <Dragable>
+          <Suspense fallback={null}>
+            <Box position={[-4, 1, 0]} />
+          </Suspense>
+          <Suspense fallback={null}>
+            <Box position={[4, 1, 0]} />
+          </Suspense>
+        </Dragable>
+        <Suspense fallback={null}>
+          <Background />
+        </Suspense>
         <Orbit />
         <axesHelper args={[5]} />
         <Floor position={[0, -0.5, 0]} />
