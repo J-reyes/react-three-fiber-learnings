@@ -1,6 +1,7 @@
 import "./App.css";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
+import { Physics } from "@react-three/cannon";
 import Orbit from "./components/Orbit";
 import Box from "./components/Box";
 import Background from "./components/Background";
@@ -21,20 +22,22 @@ function App() {
         {/* <fog attach="fog" args={["white", 1, 10]} /> */}
         <ambientLight intensity={0.2} />
         <Bulb position={[0, 3, 0]} />
-        <Dragable>
-          <Suspense fallback={null}>
-            <Box position={[-4, 1, 0]} />
-          </Suspense>
-          <Suspense fallback={null}>
-            <Box position={[4, 1, 0]} />
-          </Suspense>
-        </Dragable>
-        <Suspense fallback={null}>
-          <Background />
-        </Suspense>
-        <Orbit />
         <axesHelper args={[5]} />
-        <Floor position={[0, -0.5, 0]} />
+        <Physics>
+          <Dragable>
+            <Suspense fallback={null}>
+              <Box position={[-4, 1, 0]} />
+            </Suspense>
+            <Suspense fallback={null}>
+              <Box position={[4, 1, 0]} />
+            </Suspense>
+          </Dragable>
+          <Suspense fallback={null}>
+            <Background />
+          </Suspense>
+          <Orbit />
+          <Floor position={[0, -0.5, 0]} />
+        </Physics>
       </Canvas>
     </div>
   );

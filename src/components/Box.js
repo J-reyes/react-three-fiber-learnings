@@ -2,19 +2,14 @@ import {
   useFrame,
   useLoader,
 } from "@react-three/fiber";
+import { useBox } from "@react-three/cannon";
 import * as THREE from "three";
 import { useRef } from "react";
 
 const Box = (props) => {
-  // reference the box
-  const boxRef = useRef();
+  const [boxRef, api] = useBox(() => ({mass: 1, ...props}))
   // to add textures
   const texture = useLoader(THREE.TextureLoader, "/wood.jpeg");
-  // used to animate box
-  useFrame((state) => {
-    boxRef.current.rotation.y += 0.01;
-    boxRef.current.rotation.x += 0.01;
-  });
 
   const handlePointDown = (e) => {
     // save mesh to window
@@ -50,6 +45,8 @@ const Box = (props) => {
   return (
     <mesh
       ref={boxRef}
+      // add api so we can interact with api events
+      api={api}
       {...props}
       castShadow
       // receiveShadow

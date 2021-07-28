@@ -1,10 +1,14 @@
+import { useBox } from "@react-three/cannon";
+
 const Floor = (props) => {
+  // ref is a regular react ref
+  const [ref, api] = useBox(() => ({args: [20, 1, 10], ...props }))
   return (
-    <mesh {...props} receiveShadow>
+    <mesh ref={ref} {...props} receiveShadow>
       <boxBufferGeometry args={[20, 1, 10]} />
       <meshPhysicalMaterial />
     </mesh>
   );
 };
 
-export default Floor
+export default Floor;

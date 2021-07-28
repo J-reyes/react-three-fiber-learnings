@@ -31,6 +31,28 @@ const Dragable = (props) => {
         // set back to true once pointer is not hovering 
         scene.orbitControls.enabled = true
     );
+    controlsRef.current.addEventListener(
+      "dragstart",
+      (e) =>
+        // set mass to 0 to prevent it from falling on dragStart
+        e.object.api.mass.set(0)
+    );
+    controlsRef.current.addEventListener(
+      "dragend",
+      (e) =>
+        // reset the mass when done
+        // object will fall again when thhe user isn't dragging it
+        e.object.api.mass.set(1)
+    );
+    controlsRef.current.addEventListener(
+      "drag",
+      (e) =>
+        {
+          e.object.api.position.copy(e.object.position)
+          // prevent it from bouncing off other objects
+          e.object.api.velocity.set(0,0,0)
+        }
+    );
   }, [children, scene]);
 
   return (
