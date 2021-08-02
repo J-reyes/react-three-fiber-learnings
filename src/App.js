@@ -9,6 +9,7 @@ import Floor from "./components/Floor";
 import Bulb from "./components/Bulb";
 import ColorPicker from "./components/ColorPicker";
 import Dragable from "./components/Dragable";
+import Models from "./components/Models";
 
 function App() {
   return (
@@ -21,15 +22,21 @@ function App() {
       >
         {/* <fog attach="fog" args={["white", 1, 10]} /> */}
         <ambientLight intensity={0.2} />
-        <Bulb position={[0, 3, 0]} />
         <axesHelper args={[5]} />
         <Physics>
           <Dragable>
+            <Bulb position={[0, 3, 0]} />
             <Suspense fallback={null}>
-              <Box position={[-4, 1, 0]} />
-            </Suspense>
-            <Suspense fallback={null}>
-              <Box position={[4, 1, 0]} />
+              <Models
+                path="./tesla_model_3/scene.gltf"
+                scale={new Array(3).fill(0.01)}
+                position={[4,0.6,0]}
+              />
+              <Models
+                path="./tesla_model_s/scene.gltf"
+                scale={new Array(3).fill(0.012)}
+                position={[-4,0.2,0]}
+              />
             </Suspense>
           </Dragable>
           <Suspense fallback={null}>
