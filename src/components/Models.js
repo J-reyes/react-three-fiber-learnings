@@ -12,7 +12,7 @@ const Model = props => {
   )
   console.log(model)
   return (
-    <primitive object={model.scene} {...props}/>
+    <primitive object={model.scene} scale={props.scale}/>
   )
 }
 
