@@ -7,9 +7,9 @@ import Background from "./components/Background";
 import Floor from "./components/Floor";
 import Bulb from "./components/Bulb";
 import ColorPicker from "./components/ColorPicker";
-import Cars from './components/Cars'
-import CameraControls from './components/CameraControls'
-import CameraButtons from './components/CameraButtons'
+import Cars from "./components/Cars";
+import CameraControls from "./components/CameraControls";
+import CameraButtons from "./components/CameraButtons";
 
 function App() {
   return (
@@ -21,16 +21,18 @@ function App() {
         style={{ background: "black" }}
         camera={{ position: [7, 7, 7] }}
       >
+        <Suspense fallback={null}>
+          <Background />
+        </Suspense>
         <CameraControls />
         {/* <fog attach="fog" args={["white", 1, 10]} /> */}
         <ambientLight intensity={0.2} />
         <axesHelper args={[5]} />
+        <Bulb position={[-6, 3, 0]} />
         <Bulb position={[0, 3, 0]} />
+        <Bulb position={[6, 3, 0]} />
         <Physics>
-          <Cars/>
-          <Suspense fallback={null}>
-            <Background />
-          </Suspense>
+          <Cars />
           <Orbit />
           <Floor position={[0, -0.5, 0]} />
         </Physics>

@@ -3,7 +3,15 @@ import state from "../state";
 import * as THREE from "three";
 
 const CameraControls = ({}) => {
+
+
   useFrame(({ camera, scene }) => {
+    if(state.activeMesh.name !== state.activeMeshName) {
+      state.activeMesh = scene.getObjectByName(
+        state.activeMeshName
+      ) || {}
+    }
+
     if (state.shouldUpdate) {
       // interpolates vectors
       camera.position.lerp(state.cameraPos, 0.1);
