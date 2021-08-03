@@ -11,6 +11,7 @@ import Cars from "./components/Cars";
 import CameraControls from "./components/CameraControls";
 import CameraButtons from "./components/CameraButtons";
 import Lights from "./components/Lights";
+import Effects from "./components/Effects";
 
 function App() {
   return (
@@ -18,6 +19,12 @@ function App() {
       <ColorPicker />
       <CameraButtons />
       <Canvas
+        gl={{
+          powerPreference: "high-performance",
+          antialias: false,
+          stencil: false,
+          depth: false,
+        }}
         shadows
         style={{ background: "black" }}
         camera={{ position: [7, 7, 7] }}
@@ -29,11 +36,12 @@ function App() {
         {/* <fog attach="fog" args={["white", 1, 10]} /> */}
         <Lights />
         <Orbit />
-        <axesHelper args={[5]} />
+        {/* <axesHelper args={[5]} /> */}
         <Physics>
           <Cars />
           <Floor position={[0, -0.5, 0]} />
         </Physics>
+        <Effects />
       </Canvas>
     </div>
   );
