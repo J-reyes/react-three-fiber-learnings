@@ -27,13 +27,21 @@ function App() {
         <CameraControls />
         {/* <fog attach="fog" args={["white", 1, 10]} /> */}
         <ambientLight intensity={0.2} />
+        <directionalLight
+          shadow-mapSize-height={2 ** 10}
+          shadow-mapSize-width={2 ** 10}
+          shadow-radiues={10}
+          castShadow
+          intensity={2}
+          position={[6, 3, 0]}
+        />
+        <Orbit />
         <axesHelper args={[5]} />
         <Bulb position={[-6, 3, 0]} />
         <Bulb position={[0, 3, 0]} />
         <Bulb position={[6, 3, 0]} />
         <Physics>
           <Cars />
-          <Orbit />
           <Floor position={[0, -0.5, 0]} />
         </Physics>
       </Canvas>
