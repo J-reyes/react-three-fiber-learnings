@@ -1,17 +1,15 @@
-
-
 import { Suspense } from "react";
 import Dragable from "./Dragable";
 import Models from "./Models";
 // for debugging
 import BoundingBox from "./BoudingBox";
+import Model from "./Models";
 
 const Cars = ({}) => {
   return (
     <Suspense fallback={null}>
       <Dragable transformGroup>
         <BoundingBox
-          
           position={[4, 4, 0]}
           // bbounty box dimesions
           dims={[3, 2, 6]}
@@ -26,7 +24,6 @@ const Cars = ({}) => {
       </Dragable>
       <Dragable transformGroup>
         <BoundingBox
-          
           position={[-4, 4, 0]}
           dims={[3, 2, 7.1]}
           offset={[0, -0.8, 0.2]}
@@ -37,6 +34,12 @@ const Cars = ({}) => {
           />
         </BoundingBox>
       </Dragable>
+      <group rotation={[0, Math.PI, 0]}>
+        <Model 
+          path="./mech_drone/scene.gltf" 
+          scale={new Array(3).fill(0.01)} 
+        />
+      </group>
     </Suspense>
   );
 };
