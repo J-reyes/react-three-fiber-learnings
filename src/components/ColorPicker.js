@@ -1,16 +1,28 @@
 import * as THREE from "three";
+import state from '../state'
 
 const ColorPicker = (props) => {
   const handleClick = (e) => {
-    // if no active mesh on window return otherwise change color of active mesh
-    if (!window.activeMesh) return;
-    window.activeMesh.material.color = new THREE.Color(
+    // if no active mesh in state - return otherwise change color of active mesh
+    if (!state.activeMesh) return;
+    state.activeMesh.material.color = new THREE.Color(
       e.target.style.background
     );
   };
-  
+
   return (
-    <div style={{ position: "absolute", zIndex: 1 }}>
+    <div
+      style={{
+        position: "absolute",
+        zIndex: 1,
+        left: 0,
+        right: 0,
+        margin: "auto",
+        width: "fit-content",
+        display: 'flex',
+        top: '20px'
+      }}
+    >
       <div
         onClick={handleClick}
         style={{ background: "blue", height: 50, width: 50 }}
