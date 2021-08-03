@@ -11,7 +11,7 @@ const Cars = ({}) => {
     <Suspense fallback={null}>
       <Dragable transformGroup>
         <BoundingBox
-          visible
+          
           position={[4, 4, 0]}
           // bbounty box dimesions
           dims={[3, 2, 6]}
@@ -26,7 +26,7 @@ const Cars = ({}) => {
       </Dragable>
       <Dragable transformGroup>
         <BoundingBox
-          visible
+          
           position={[-4, 4, 0]}
           dims={[3, 2, 7.1]}
           offset={[0, -0.8, 0.2]}
