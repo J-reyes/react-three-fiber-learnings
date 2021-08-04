@@ -17,7 +17,7 @@ const Cars = ({}) => {
           offset={[0, -0.4, 0.8]}
         >
           <Models
-            path="./tesla_model_3/scene.gltf"
+            path="/tesla_model_3/scene.gltf"
             scale={new Array(3).fill(0.01)}
           />
         </BoundingBox>
@@ -29,14 +29,14 @@ const Cars = ({}) => {
           offset={[0, -0.8, 0.2]}
         >
           <Models
-            path="./tesla_model_s/scene.gltf"
+            path="/tesla_model_s/scene.gltf"
             scale={new Array(3).fill(0.013)}
           />
         </BoundingBox>
       </Dragable>
       <group rotation={[0, Math.PI, 0]}>
         <Model 
-          path="./mech_drone/scene.gltf" 
+          path="/mech_drone/scene.gltf" 
           scale={new Array(3).fill(0.01)} 
         />
       </group>
